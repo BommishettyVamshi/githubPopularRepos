@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
-
+import LanguageFilterItem from '../LanguageFilterItem'
 import './index.css'
 
 const languageFiltersData = [
@@ -25,7 +25,7 @@ class GithubPopularRepos extends Component {
   getPopularRepos = async () => {
     const {activeOptionId} = this.state
 
-    const url = 'https://apis.ccbp.in/popular-repos'
+    const url = `https://apis.ccbp.in/popular-repos?language=${activeOptionId}`
 
     const response = await fetch(url)
     const data = await response.json()
@@ -44,12 +44,31 @@ class GithubPopularRepos extends Component {
     })
   }
 
+  changeLanguage = languageId => {
+    this.setState(
+      {
+        activeOptionId: languageId,
+      },
+      this.getPopularRepos,
+    )
+  }
+
   render() {
     const {activeOptionId, githubPopularReposList} = this.state
     console.log(activeOptionId, githubPopularReposList)
     return (
       <div className="app-container">
         <h1 className="heading">Popular</h1>
+        <ul className="language-filter-list-container">
+          {languageFiltersData.map(each => (
+            <LanguageFilterItem
+              languageFilterDetails={each}
+              changeLanguage={this.changeLanguage}
+              isActiveLanguage={each.id === activeOptionId}
+              key={each.id}
+            />
+          ))}
+        </ul>
       </div>
     )
   }
