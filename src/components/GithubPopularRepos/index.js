@@ -1,3 +1,8 @@
+import {Component} from 'react'
+import Loader from 'react-loader-spinner'
+
+import './index.css'
+
 const languageFiltersData = [
   {id: 'ALL', language: 'All'},
   {id: 'JAVASCRIPT', language: 'Javascript'},
@@ -7,3 +12,47 @@ const languageFiltersData = [
 ]
 
 // Write your code here
+class GithubPopularRepos extends Component {
+  state = {
+    activeOptionId: languageFiltersData[0].id,
+    githubPopularReposList: [],
+  }
+
+  componentDidMount() {
+    this.getPopularRepos()
+  }
+
+  getPopularRepos = async () => {
+    const {activeOptionId} = this.state
+
+    const url = 'https://apis.ccbp.in/popular-repos'
+
+    const response = await fetch(url)
+    const data = await response.json()
+
+    const formattedData = data.popular_repos.map(each => ({
+      id: each.id,
+      name: each.name,
+      issuesCount: each.issues_count,
+      forksCount: each.forks_count,
+      starsCount: each.stars_count,
+      avatarUrl: each.avatar_url,
+    }))
+
+    this.setState({
+      githubPopularReposList: formattedData,
+    })
+  }
+
+  render() {
+    const {activeOptionId, githubPopularReposList} = this.state
+    console.log(activeOptionId, githubPopularReposList)
+    return (
+      <div className="app-container">
+        <h1 className="heading">Popular</h1>
+      </div>
+    )
+  }
+}
+
+export default GithubPopularRepos
