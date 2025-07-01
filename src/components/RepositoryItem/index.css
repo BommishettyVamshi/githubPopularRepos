@@ -1,1 +1,38 @@
 /* Write your CSS here */
+.repo-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8ff;
+  border-width: 0px;
+  border-radius: 15px;
+  padding: 20px;
+  gap: 5px;
+}
+
+.avatar {
+  height: 100px;
+  width: 100px;
+}
+
+.name {
+  color: #e73959;
+}
+
+.description-card {
+  align-self: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  height: 18px;
+  width: 18px;
+}
+
+.count {
+  font-weight: bolder;
+}
